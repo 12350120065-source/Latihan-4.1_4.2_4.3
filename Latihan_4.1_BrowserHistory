@@ -1,0 +1,97 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+    public class BrowserHistorySimulation {
+        private static List<String> history = new ArrayList<>();
+
+        // 1. Fork repository
+        public static void forkRepository(String repoName) {
+            history.add("Forked repository: " + repoName);
+            System.out.println("Repository berhasil di-fork: " + repoName);
+        }
+
+        // 2. Clone repository
+        public static void cloneRepository(String repoName) {
+            history.add("Cloned repository: " + repoName);
+            System.out.println("Repository berhasil di-clone: " + repoName);
+        }
+        
+        // 3. Modifikasi
+        public static void modifyRepository(String message) {
+            history.add("Modified repository: " + message);
+            System.out.println("Repository berhasil dimodifikasi: " + message);
+        }
+
+        // 4. Commit
+        public static void commitChanges(String commitMsg) {
+            history.add("Commit changes: " + commitMsg);
+            System.out.println("Perubahan berhasil di-commit dengan pesan: " + commitMsg);
+        }
+
+        // 5. Push
+        public static void pushToRemote() {
+            history.add("Pushed to remote repository");
+            System.out.println("Perubahan berhasil di-push ke remote repository.");
+        }
+
+        // Menampilkan semua history
+        public static void showHistory() {
+            System.out.println("\n=== BROWSER HISTORY GIT ===");
+            for (String item : history) {
+                System.out.println("- " + item);
+            }
+            System.out.println("============================\n");
+        }
+
+        // MAIN
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            String command;
+
+            System.out.println("=== SIMULASI BROWSER HISTORY GIT ===");
+            System.out.println("Perintah:");
+            System.out.println("fork <nama_repo>");
+            System.out.println("clone <nama_repo>");
+            System.out.println("modify <pesan>");
+            System.out.println("commit <pesan_commit>");
+            System.out.println("push");
+            System.out.println("show");
+            System.out.println("exit\n");
+
+            while (true) {
+                System.out.print(">> ");
+                command = scanner.nextLine();
+
+                if (command.startsWith("fork ")) {
+                    forkRepository(command.substring(5));
+                }
+                else if (command.startsWith("clone ")) {
+                    cloneRepository(command.substring(6));
+                }
+                else if (command.startsWith("modify ")) {
+                    modifyRepository(command.substring(7));
+                }
+                else if (command.startsWith("commit ")) {
+                    commitChanges(command.substring(7));
+                }
+                else if (command.equals("push")) {
+                    pushToRemote();
+                }
+                else if (command.equals("show")) {
+                    showHistory();
+                }
+                else if (command.equals("exit")) {
+                    System.out.println("Program selesai.");
+                    break;
+                }
+                else {
+                    System.out.println("Perintah tidak dikenal.");
+                }
+            }
+
+            scanner.close();
+
+    }
+
+}
