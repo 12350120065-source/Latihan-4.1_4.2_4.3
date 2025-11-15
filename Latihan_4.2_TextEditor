@@ -1,0 +1,79 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+    public class TextEditorSimulation {
+
+        private static String currentText = "";
+        private static Stack<String> undoStack = new Stack<>();
+        private static Stack<String> redoStack = new Stack<>();
+
+        // Fungsi WRITE
+        public static void write(String newText) {
+            undoStack.push(currentText);
+            currentText += newText;
+            redoStack.clear();
+        }
+
+        // Fungsi UNDO
+        public static void undo() {
+            if (!undoStack.isEmpty()) {
+                redoStack.push(currentText);
+                currentText = undoStack.pop();
+            } else {
+                System.out.println("Tidak ada yang bisa di-undo.");
+            }
+        }
+
+        // Fungsi REDO
+        public static void redo() {
+            if (!redoStack.isEmpty()) {
+                undoStack.push(currentText);
+                currentText = redoStack.pop();
+            } else {
+                System.out.println("Tidak ada yang bisa di-redo.");
+            }
+        }
+
+        // Fungsi SHOW
+        public static void show() {
+            System.out.println("Isi Teks: " + currentText);
+        }
+
+        // MAIN PROGRAM
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            String command;
+
+            System.out.println("=== TEXT EDITOR SIMULATION ===");
+            System.out.println("Perintah: write <teks> | undo | redo | show | exit\n");
+
+            while (true) {
+                System.out.print(">> ");
+                command = scanner.nextLine();
+
+                if (command.startsWith("write ")) {
+                    String textToAdd = command.substring(6);
+                    write(textToAdd);
+                }
+                else if (command.equals("undo")) {
+                    undo();
+                }
+                else if (command.equals("redo")) {
+                    redo();
+                }
+                else if (command.equals("show")) {
+                    show();
+                }
+                else if (command.equals("exit")) {
+                    System.out.println("Program selesai.");
+                    break;
+                }
+                else {
+                    System.out.println("Perintah tidak dikenal.");
+                }
+            }
+
+            scanner.close();
+}
+    }
+
